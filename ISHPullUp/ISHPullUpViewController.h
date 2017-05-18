@@ -286,6 +286,9 @@ typedef struct ISHPullUpAnimationConfiguration ISHPullUpAnimationConfiguration;
 
 /// Call this method when the minimum or maximum values change.
 - (void)invalidateLayout;
+
+/// Set the left and right side margins for the bottom view.
+@property (nonatomic) CGFloat bottomViewSideMargin;
 @end
 
 NS_ASSUME_NONNULL_END

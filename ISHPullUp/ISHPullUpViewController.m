@@ -67,6 +67,7 @@ const CGFloat ISHPullUpViewControllerDefaultTopMargin = 20.0;
     config.initialVelocity = 0.3;
     config.options = UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionLayoutSubviews;
     self.animationConfiguration = config;
+	self.bottomViewSideMargin = 0;
 }
 
 - (void)viewDidLoad {
@@ -441,13 +442,19 @@ const CGFloat ISHPullUpViewControllerDefaultTopMargin = 20.0;
              */
             CGFloat maxHeight = self.maximumBottomHeightCached;
             CGFloat expandedBottomHeight = MAX(maxHeight, clampedBottomHeight);
-            bottomFrame = CGRectMake(0, CGRectGetMaxY(bounds) - clampedBottomHeight, CGRectGetWidth(bounds), expandedBottomHeight);
+            bottomFrame = CGRectMake(self.bottomViewSideMargin,
+									 CGRectGetMaxY(bounds) - clampedBottomHeight,
+									 CGRectGetWidth(bounds) - self.bottomViewSideMargin * 2, 
+									 expandedBottomHeight);
             break;
         }
 
         case ISHPullUpBottomLayoutModeResize: {
             clampedBottomHeight = bottomHeight;
-            bottomFrame = CGRectMake(0, CGRectGetMaxY(bounds) - clampedBottomHeight, CGRectGetWidth(bounds), clampedBottomHeight);
+            bottomFrame = CGRectMake(self.bottomViewSideMargin,
+									 CGRectGetMaxY(bounds) - clampedBottomHeight,
+									 CGRectGetWidth(bounds) - self.bottomViewSideMargin * 2, 
+									 clampedBottomHeight);
             break;
         }
     }
@@ -612,7 +619,7 @@ const CGFloat ISHPullUpViewControllerDefaultTopMargin = 20.0;
 }
 
 - (void)updateLayoutOfDimmingView:(UIView *)dimmingView bottomHeight:(CGFloat)bottomHeight {
-    [dimmingView setFrame:UIEdgeInsetsInsetRect(self.contentViewController.view.frame, UIEdgeInsetsMake(0, 0, bottomHeight, 0))];
+    [dimmingView setFrame:self.contentViewController.view.frame];
 }
 
 - (void)handleDimmingViewTapGesture:(UITapGestureRecognizer *)tap {
